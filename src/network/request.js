@@ -112,6 +112,38 @@ export default {
         })
         return instance(config)
     },
+    requestdeviceAvgDataInTimes(config){
+        
+         if(config.baseConfig==="custom")
+         {
+            
+            const instance=axios.create({
+                baseURL:'http://47.96.15.25:8080/screen_api_v2/web/deviceAvgDataInTimes',
+                headers:{'token':VueCookie.get('token')
+            },
+                params:{
+                    type:config.baseConfig,
+                     startTime:config.startTime,
+                     endTime:config.endTime   
+                }
+            })
+            return instance(config)
+         }
+         else
+         {
+            
+            const instance=axios.create({
+                baseURL:'http://47.96.15.25:8080/screen_api_v2/web/deviceAvgDataInTimes',
+                headers:{'token':VueCookie.get('token')
+            },
+                params:{
+                    type:config.baseConfig
+                }
+            })
+            return instance(config)
+         }
+        
+    },
    
 }
 

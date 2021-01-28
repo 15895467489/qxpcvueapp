@@ -135,12 +135,7 @@
           :class="{ sensorkeyActive: isSelected == 'CO' }"
           @click="sensorkeySelected('CO')"
           >CO</span
-        >
-        <!-- <span
-          :class="{ sensorkeyActive: isSelected == 'TVOC' }"
-          @click="sensorkeySelected('TVOC')"
-          >TVOC</span
-        > -->
+        >        
       </div>
       <div class="Echarts" style="margin-bottom: 30px">
         <div id="main" style="width: 100%; height: 300px"></div>
@@ -154,7 +149,6 @@ import request from "../network/request.js";
 import Request from "../network/request.js";
 //这里可以导入其他文件（比如：组件，工具js，第三方插件js，json文件，图片文件等等）
 // 例如：import《组件名称》from'《组件路径》';
-// import echarts from 'echarts'
 export default {
   //import 引入的组件需要注入到对象中才能使用
   components: {},
@@ -193,7 +187,9 @@ export default {
   methods: {
     runcity() {
       Request.requestcity({}).then((res) => {
+      
         this.cityName = res.data.data.regionName;
+        
         this.cityCode = res.data.data.regionCode;
         this.runrealweather();
         this.runsixParamAndAqi(this.cityCode);
@@ -212,31 +208,37 @@ export default {
       });
     },
     runhoulyAQI() {
-      Request.requesthouylyAQI({
-        baseConfig: this.cityCode,
-      }).then((res) => {
-        this.AQIvalue = res.data.data.AQI;
+      try {
+        Request.requesthouylyAQI({
+          baseConfig: this.cityCode,
+        }).then((res) => {
+        
+          this.AQIvalue = res.data.data.AQI;
 
-        this.pollutionimportantance = res.data.data.maxSensor;
-        if (this.AQIvalue > 0 && this.AQIvalue <= 50) {
-          this.AQIlevel = "优";
-        } else if (this.AQIvalue >= 51 && this.AQIvalue <= 100) {
-          this.AQIlevel = "良";
-        } else if (this.AQIvalue >= 101 && this.AQIvalue <= 150) {
-          this.AQIlevel = "轻度";
-        } else if (this.AQIvalue >= 151 && this.AQIvalue <= 200) {
-          this.AQIlevel = "中度";
-        } else if (this.AQIvalue >= 201 && this.AQIvalue <= 300) {
-          this.AQIlevel = "重度";
-        } else if (this.AQIvalue >= 301) {
-          this.AQIlevel = "严重";
-        }
-        // console.log( this.AQIlevel)
-        this.mapping();
-      });
+          this.pollutionimportantance = res.data.data.maxSensor;
+          if (this.AQIvalue > 0 && this.AQIvalue <= 50) {
+            this.AQIlevel = "优";
+          } else if (this.AQIvalue >= 51 && this.AQIvalue <= 100) {
+            this.AQIlevel = "良";
+          } else if (this.AQIvalue >= 101 && this.AQIvalue <= 150) {
+            this.AQIlevel = "轻度";
+          } else if (this.AQIvalue >= 151 && this.AQIvalue <= 200) {
+            this.AQIlevel = "中度";
+          } else if (this.AQIvalue >= 201 && this.AQIvalue <= 300) {
+            this.AQIlevel = "重度";
+          } else if (this.AQIvalue >= 301) {
+            this.AQIlevel = "严重";
+          }
+          // console.log( this.AQIlevel)
+          this.mapping();
+        });
+      } catch {
+     this.mapping();
+      }
     },
     sensorkeySelected(sensorkey) {
       this.isSelected = sensorkey;
+      
       this.myEcharts();
     },
     spanClick(time) {
@@ -253,11 +255,11 @@ export default {
       this.SO2S = [];
       this.O3S = [];
       this.NO2S = [];
-      this.timedatas = [];    
+      this.timedatas = [];
       Request.requestsixParamAndAqi({
         baseConfig: citycode,
         unit: this.timecontent,
-      }).then((res) => {    
+      }).then((res) => {
         for (let i = 0; i < res.data.data.length; i++) {
           this.AQIS.push(res.data.data[i].AQI);
           this.PM2S.push(res.data.data[i].e1);
@@ -268,7 +270,7 @@ export default {
           this.NO2S.push(res.data.data[i].e16);
           this.timedatas.push(res.data.data[i].time);
         }
-        console.log(this.timedatas);
+       
         this.myEcharts();
       });
     },

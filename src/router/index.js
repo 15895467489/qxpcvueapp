@@ -16,32 +16,47 @@ const router= new Router({
     routes:[
         {
             path:'',
-            redirect:'/login'
+            // name:'登录',
+            redirect:'/login',
+            meta:{
+                title:'七星瓢虫环境科技'
+            }
         },
         {
    path:'/login',
-   component:Login
+   component:Login,
+   meta:{
+       title:'七星瓢虫环境科技'
+   }
+
         },
         {
             path:'/map',
             component:Map,
+            meta:{
+                title:'七星瓢虫环境科技'
+            },
             children:[
                 {
                     path:"shouye",
-                    component:Shouye
+                    component:Shouye,
+                   
                 
                 },
                 {
                     path:'mapview',
-                    component:Mapview
+                    component:Mapview,
+                   
                 },
                 {
                     path:'paiming',
-                    component:Paiming
+                    component:Paiming,
+                  
                 },
                 {
                     path:'wode',
-                    component:Wode
+                    component:Wode,
+                   
                 }
 
             ]
@@ -51,3 +66,11 @@ const router= new Router({
 })
 
 export default  router
+//前置钩子（hook）  跳转之前调用
+router.beforeEach((to,from,next)=>{
+    //next() 方法必须配置，不然不会执行下一步，不然无法调用别的vue文件
+    next()
+    //从from跳转到to 定义标题
+    document.title=to.matched[0].meta.title
+    
+  })

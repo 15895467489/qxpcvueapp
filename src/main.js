@@ -12,6 +12,11 @@ import VueCookie from 'js-cookie'
 
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
+import datePicker from "./directive/datePicker.js" 
+Vue.use(datePicker)
+
+import preventReClick from './directive/preventReClick'
+Vue.use(preventReClick)
 
 Vue.use(VueCookie)
 
@@ -24,3 +29,7 @@ new Vue({
   store,
   render: h => h(App),
 }).$mount('#app')
+
+
+
+ 

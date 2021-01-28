@@ -169,8 +169,7 @@ export default {
         //网络请求传参
         baseConfig: sensorKey,
       })
-        .then((res) => {
-          console.log(res);
+        .then((res) => {   
           this.devicesData = res.data.data.device;
           this.runSensorKeysData();
         })
@@ -227,9 +226,7 @@ export default {
 
     runInterval() {
       Request.request({})
-        .then((res) => {
-          console.log(res)
-console.log(res.data.orgId)
+        .then((res) => {       
           store.state.orgId = res.data.orgId;
           store.state.regionCode = res.data.regionCode;
 
@@ -332,7 +329,6 @@ console.log(res.data.orgId)
               icon: iconColor,
             }
           );
-
           this.mark = marker;
           this.map.addLayer(marker);
         }
@@ -353,7 +349,7 @@ console.log(res.data.orgId)
             htmlview +=
               "<div><span>" +
               key +
-              ":" +
+              "：" +
               "</span><span>" +
               this.fiveMinutesDeviceData[key] +
               "</span></div>";
@@ -399,7 +395,6 @@ console.log(res.data.orgId)
   },
   //生命周期 - 创建完成（可以访问当前 this 实例）
   created() {
-    console.log('created')
     this.runInterval();
     
   },
@@ -408,8 +403,8 @@ console.log(res.data.orgId)
     //网络请求 得到regionCode  5分钟定时请求
     this.fiveMinutesInterval = setInterval(() => {
       this.runInterval();
-      this.runLocation();
-    }, 1000000);
+      this.runLocation('e1');
+    }, 300000);
   },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
@@ -520,6 +515,6 @@ console.log(res.data.orgId)
 .deviceinput {
   height: 18px;
   margin: 4px;
-  width:120px;
+  width:115px;
 }
 </style>

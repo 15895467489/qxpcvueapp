@@ -49,7 +49,6 @@ props: {},
 data() {
 //这里存放数据
 return {
-
 path:'/map/shouye'
 };
 },

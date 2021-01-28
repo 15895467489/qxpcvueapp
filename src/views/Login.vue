@@ -1,21 +1,28 @@
 <template>
   <div id="login">
   <div id="loginview">
-    <input
+    <input style="
+    height: 26px;width:200px
+"
       type="text"
       v-model="loginForm.account"
       placeholder="用户名"
       name=""
     /><br />
 <br />
-    <input
+    <input style="
+    height: 26px;width:200px
+"
       type="text"
       v-model="loginForm.password"
       placeholder="密码"
       name=""
     /><br />
 <br />
-    <button @click="login">登录</button>
+    <button @click="login" style="
+    height: 35px;
+    border-radius: 20px;background:white
+">登录</button>
   </div>
     
 
@@ -64,7 +71,7 @@ export default {
           data: this.loginForm,
         })
           .then((res) => {
-             console.log(res)    
+             
             let accountId = res.data.accountId;
             let token = res.data.token;
             cookie.set("token", token);
@@ -90,7 +97,16 @@ export default {
   created() {},
 
   //生命周期 - 挂载完成（可以访问 DOM 元素）
-  mounted() {},
+  mounted() {
+  window.alert = function(name){
+    var iframe = document.createElement("IFRAME");
+    iframe.style.display="none";
+    iframe.setAttribute("src", 'data:text/plain,');
+    document.documentElement.appendChild(iframe);
+    window.frames[0].window.alert(name);
+    iframe.parentNode.removeChild(iframe);
+}
+  },
   beforeCreate() {}, //生命周期 - 创建之前
   beforeMount() {}, //生命周期 - 挂载之前
   beforeUpdate() {}, //生命周期 - 更新之前
